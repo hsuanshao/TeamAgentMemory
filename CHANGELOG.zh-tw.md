@@ -6,6 +6,9 @@
 
 ## [未發布]
 
+### 變更
+- **授權：從這一版開始，server 端由 Business Source License 1.1 改為 Apache License 2.0。** 你可以自由使用、修改和再散布，商業產品與託管服務也包含在內，不需要商業授權。`amem` client 和 plugin 維持 MIT。0.4.0 到 0.5.2 維持發布時的 BSL 條款（[COMMERCIAL.zh-tw.md](COMMERCIAL.zh-tw.md)）。
+
 ## [0.5.2] - 2026-10-31
 
 **升級前請先閱讀 [UPGRADE → 升級到 0.5.2](docs/UPGRADE.zh-tw.md#升級到-052)。** 場景會記錄它由哪些 atom 寫成，這些 atom 變動時 L2 會把場景更新，所以呼叫蒸餾模型的次數可能變多（上限：`memory.l2.staleScenesPerRun`、`staleMaxAttempts`）。退回 0.5.1 必須還原備份（schema 遷移 8）。

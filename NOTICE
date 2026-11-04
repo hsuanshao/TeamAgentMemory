@@ -1,0 +1,7 @@
+AgentMemory
+Copyright 2026 William Chang
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE),
+from version 0.5.3, except the files under crates/memory-client/ and clients/,
+which are licensed under the MIT License (see the LICENSE file in each of
+those directories).

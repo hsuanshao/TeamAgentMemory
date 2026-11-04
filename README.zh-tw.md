@@ -7,7 +7,7 @@
 
 [![CI](https://img.shields.io/github/actions/workflow/status/hsuanshao/TeamAgentMemory/ci.yml?branch=main&label=CI)](https://github.com/hsuanshao/TeamAgentMemory/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/hsuanshao/TeamAgentMemory)](https://github.com/hsuanshao/TeamAgentMemory/releases/latest)
-[![License: BUSL-1.1](https://img.shields.io/badge/license-BUSL--1.1-blue)](COMMERCIAL.md)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
 [![MSRV](https://img.shields.io/badge/MSRV-1.88-orange?logo=rust)](Cargo.toml)
 [![Docker image](https://img.shields.io/badge/ghcr.io-agentmemory--core-2496ED?logo=docker&logoColor=white)](https://github.com/hsuanshao/TeamAgentMemory/pkgs/container/agentmemory-core)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-FE5196?logo=conventionalcommits&logoColor=white)](https://www.conventionalcommits.org)
@@ -324,7 +324,7 @@ llm:
 
 ## 授權
 
-從 0.4.0 版開始，server 端改用 [Business Source License 1.1](LICENSE)：評估測試、個人與非營利使用，以及最多 1 個部門、10 位成員的組織都可以免費使用；更大規模的正式環境使用需要商業授權。每個版本發布滿四年後轉為 Apache 2.0。`amem` client 和各工具的 plugin 維持 MIT，0.3.2 以前的版本也維持 MIT。詳見 [COMMERCIAL.zh-tw.md](COMMERCIAL.zh-tw.md)。
+從 0.5.3 版開始，server 端採用 [Apache License 2.0](LICENSE)：你可以自由使用、修改和再散布，商業產品也包含在內。`amem` client 和各工具的 plugin 維持 MIT。0.4.0 到 0.5.2 以 Business Source License 1.1 發布，0.3.2 以前的版本以 MIT 發布；詳見 [COMMERCIAL.zh-tw.md](COMMERCIAL.zh-tw.md)。
 
 ## 致謝
 

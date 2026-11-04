@@ -1,36 +1,25 @@
-# 授權與商業使用
+# 授權
 
 [English](COMMERCIAL.md)
 
-從 0.4.0 版開始，AgentMemory 的 server 端改用 [Business Source License 1.1](LICENSE)（BSL）授權。原始碼仍然公開，你可以閱讀、修改、自行建置，也可以參與貢獻。超出下面免費範圍的正式環境使用，需要購買商業授權。本頁用白話說明 [LICENSE](LICENSE)；兩者不一致時，以 LICENSE 為準。
+AgentMemory 的授權依版本和使用的部分而定。本頁做整理；與各版本隨附的授權條文不一致時，以授權條文為準。
 
-## 哪些使用是免費的
+## 目前的版本
 
-| 使用情況 | 是否免費 |
+從 0.5.3 版開始，AgentMemory 的 server 端採用 [Apache License 2.0](LICENSE)。你可以為任何目的使用、修改和再散布，商業產品與託管服務也包含在內，不需要另外取得授權。散布時請保留 [LICENSE](LICENSE) 和 [NOTICE](NOTICE)，並標示你修改過的檔案。
+
+`amem` client（`crates/memory-client/`）和各工具的 plugin（`clients/`）維持 MIT 授權。
+
+## 先前的版本
+
+| 版本 | server 端授權 |
 | --- | --- |
-| 任何組織的評估、開發和測試 | 是，一律免費 |
-| 個人的非商業使用 | 是 |
-| 非營利組織，或立案的學校、研究機構，用於自身的非商業目的 | 是 |
-| 其他組織，所有部署合計最多 **1 個部門、10 個成員** | 是 |
-| 其他組織超過上述規模 | 需要商業授權 |
-| 把 AgentMemory，或主要建立在它之上的產品，做成託管、代管或嵌入式服務提供給他人 | 需要商業授權 |
+| 0.5.3 以後 | Apache License 2.0 |
+| 0.4.0 到 0.5.2 | Business Source License 1.1（見下方） |
+| 0.3.2 以前 | MIT License |
 
-- **組織**：包含控制它、受它控制，或與它受同一方控制的所有公司。
-- **部門**：memory-core 上一個獨立的資料空間（[COLLABORATION.zh-tw.md](docs/COLLABORATION.zh-tw.md)）。
-- **成員**：可以讀寫記憶的使用者帳號。成員使用的 agent 不另外計算。
+**0.4.0 到 0.5.2** 維持發布時的 Business Source License 1.1。依照這份授權，以下情況可以免費在正式環境使用：評估、開發和測試；個人的非商業使用；非營利組織，或立案的學校、研究機構；以及所有部署合計最多 1 個部門、10 位成員的組織。其他正式環境使用，以及把這些版本做成託管、代管或嵌入式服務提供給他人，需要商業授權；這些版本各自在發布滿四年後轉為 Apache 2.0。想改用 Apache License 2.0，請升級到 0.5.3 以後的版本。
 
-## 哪些維持 MIT
+## 聯絡方式
 
-- **已發布的版本**：0.3.2 以前的版本，永遠維持 MIT 授權。
-- **Client**：`amem` client（`crates/memory-client/`）和各工具的 plugin（`clients/`）維持 MIT 授權，任何工具都能自由串接 AgentMemory server。
-
-## 各版本何時轉為開源
-
-每個版本在發布滿四年後，會轉為 **Apache License 2.0**。例如 2027-01-15 發布的版本，在 2031-01-15 轉為 Apache 2.0。
-
-## 購買商業授權
-
-請來信 **william@hsuanshao.com**，並附上：
-- 貴組織的名稱；
-- 大約需要幾個部門、幾位成員；
-- 是自行部署，還是提供給他人使用。
+請來信 **william@hsuanshao.com**。
