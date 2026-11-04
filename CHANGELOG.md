@@ -6,6 +6,9 @@ Notable changes of each release. The [release notes](https://github.com/hsuansha
 
 ## [Unreleased]
 
+### Changed
+- **License: from this version the server is licensed under the Apache License 2.0** instead of the Business Source License 1.1. You may use, modify and redistribute it, including in commercial products and hosted services, with no commercial license needed. The `amem` client and the plugins stay MIT. 0.4.0 to 0.5.2 keep the BSL terms they were released with ([COMMERCIAL.md](COMMERCIAL.md)).
+
 ## [0.5.2] - 2026-10-31
 
 **Read [UPGRADE → To 0.5.2](docs/UPGRADE.md#to-052) before upgrading.** Scenes record the atoms they were built from, and L2 brings a scene up to date when those atoms change, so it may call the distillation model more often (limits: `memory.l2.staleScenesPerRun`, `staleMaxAttempts`). Going back to 0.5.1 needs the backup restored (schema migration 8).
