@@ -6,6 +6,10 @@ Notable changes of each release. The [release notes](https://github.com/hsuansha
 
 ## [Unreleased]
 
+## [0.5.3] - 2026-11-04
+
+**From this version the server is licensed under the Apache License 2.0.** Nothing else changes: no schema migration, no configuration or API change. From 0.5.1, read [UPGRADE → To 0.5.2](docs/UPGRADE.md#to-052) first.
+
 ### Changed
 - **License: from this version the server is licensed under the Apache License 2.0** instead of the Business Source License 1.1. You may use, modify and redistribute it, including in commercial products and hosted services, with no commercial license needed. The `amem` client and the plugins stay MIT. 0.4.0 to 0.5.2 keep the BSL terms they were released with ([COMMERCIAL.md](COMMERCIAL.md)).
 
@@ -191,7 +195,8 @@ Its GitHub release was withdrawn the same day; use 0.5.1.
 
 First public release: memory-core, the L0→L3 distillation pipeline, hybrid recall, the metadata plane, the Monitor Panel, `amem` with plugins for Claude Code, Codex, Antigravity and Hermes, and `install.sh`. Clients authenticate with per-user keys.
 
-[Unreleased]: https://github.com/hsuanshao/TeamAgentMemory/compare/v0.5.2...HEAD
+[Unreleased]: https://github.com/hsuanshao/TeamAgentMemory/compare/v0.5.3...HEAD
+[0.5.3]: https://github.com/hsuanshao/TeamAgentMemory/releases/tag/v0.5.3
 [0.5.2]: https://github.com/hsuanshao/TeamAgentMemory/releases/tag/v0.5.2
 [0.5.1]: https://github.com/hsuanshao/TeamAgentMemory/releases/tag/v0.5.1
 [0.5.0]: https://github.com/hsuanshao/TeamAgentMemory/tree/87079c7

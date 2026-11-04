@@ -6,6 +6,10 @@
 
 ## [未發布]
 
+## [0.5.3] - 2026-11-04
+
+**從這一版開始，server 端採用 Apache License 2.0。** 其他都沒有變：沒有 schema 遷移，設定和 API 也沒有變更。從 0.5.1 升級時，請先閱讀 [UPGRADE → 升級到 0.5.2](docs/UPGRADE.zh-tw.md#升級到-052)。
+
 ### 變更
 - **授權：從這一版開始，server 端由 Business Source License 1.1 改為 Apache License 2.0。** 你可以自由使用、修改和再散布，商業產品與託管服務也包含在內，不需要商業授權。`amem` client 和 plugin 維持 MIT。0.4.0 到 0.5.2 維持發布時的 BSL 條款（[COMMERCIAL.zh-tw.md](COMMERCIAL.zh-tw.md)）。
 
@@ -191,7 +195,8 @@
 
 第一個公開版本：memory-core、L0→L3 蒸餾管線、混合召回、metadata 平面、Monitor Panel、`amem` 以及 Claude Code、Codex、Antigravity、Hermes 的 plugin，還有 `install.sh`。client 使用每位使用者各自的 key 驗證。
 
-[未發布]: https://github.com/hsuanshao/TeamAgentMemory/compare/v0.5.2...HEAD
+[未發布]: https://github.com/hsuanshao/TeamAgentMemory/compare/v0.5.3...HEAD
+[0.5.3]: https://github.com/hsuanshao/TeamAgentMemory/releases/tag/v0.5.3
 [0.5.2]: https://github.com/hsuanshao/TeamAgentMemory/releases/tag/v0.5.2
 [0.5.1]: https://github.com/hsuanshao/TeamAgentMemory/releases/tag/v0.5.1
 [0.5.0]: https://github.com/hsuanshao/TeamAgentMemory/tree/87079c7
