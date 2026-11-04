@@ -4,6 +4,7 @@
 
 ## Contents
 
+- [To 0.5.3](#to-053)
 - [To 0.5.2](#to-052)
 - [To 0.5.1](#to-051)
 - [To 0.5.0](#to-050)
@@ -22,6 +23,18 @@
   - [D. Check the result](#d-check-the-result)
   - [E. Roll back](#e-roll-back)
   - [F. Troubleshooting](#f-troubleshooting)
+
+## To 0.5.3
+
+```bash
+git fetch --tags && git checkout v0.5.3
+./upgrade.sh
+```
+
+0.5.3 changes only the license: from this version the server is under the Apache License 2.0 instead of the Business Source License 1.1 ([COMMERCIAL.md](../COMMERCIAL.md)). The code is the same as 0.5.2, with a Panel dependency update.
+
+- **From 0.5.2:** nothing to migrate, and going back to 0.5.2 needs no backup.
+- **From 0.5.1 or earlier:** read [To 0.5.2](#to-052) below first; its schema migration 8 applies, and going back to 0.5.1 means restoring the backup.
 
 ## To 0.5.2
 
