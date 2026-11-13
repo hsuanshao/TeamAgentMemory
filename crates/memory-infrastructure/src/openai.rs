@@ -352,6 +352,88 @@ mod tests {
         }
     }
 
+    /// An embedding service that answers every request with a 200 carrying
+    /// one item per `(index, embedding)` pair, in the order given.
+    async fn embedding_service_with(items: &[(usize, [f32; 2])]) -> String {
+        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        let data: Vec<_> = items
+            .iter()
+            .map(|(index, embedding)| json!({"object": "embedding", "index": index, "embedding": embedding}))
+            .collect();
+        let body = json!({"object": "list", "data": data}).to_string();
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let addr = listener.local_addr().unwrap();
+        tokio::spawn(async move {
+            while let Ok((mut socket, _)) = listener.accept().await {
+                let mut buf = [0u8; 4096];
+                let _ = socket.read(&mut buf).await;
+                let reply = format!(
+                    "HTTP/1.1 200 OK\r\ncontent-type: application/json\r\ncontent-length: {}\r\nconnection: close\r\n\r\n{body}",
+                    body.len()
+                );
+                let _ = socket.write_all(reply.as_bytes()).await;
+            }
+        });
+        format!("http://{addr}/v1")
+    }
+
+    fn embedder_at(base_url: String) -> OpenAiEmbedding {
+        OpenAiEmbedding::new(EmbeddingSettings {
+            base_url,
+            api_key: "k".into(),
+            model: "m".into(),
+            dimensions: 2,
+            timeout: Duration::from_secs(5),
+            max_concurrency: 1,
+        })
+    }
+
+    fn texts(n: usize) -> Vec<String> {
+        (0..n).map(|i| format!("text {i}")).collect()
+    }
+
+    /// The service answers `items` to a request for `inputs` texts; that
+    /// must not come back as vectors.
+    async fn assert_rejected(items: &[(usize, [f32; 2])], inputs: usize) {
+        let embedder = embedder_at(embedding_service_with(items).await);
+        let err = embedder.embed(&texts(inputs)).await.unwrap_err();
+        assert_eq!(err.kind, ErrorKind::Unavailable, "{err:?}");
+    }
+
+    #[tokio::test]
+    async fn a_missing_embedding_is_rejected() {
+        assert_rejected(&[(0, [1.0, 0.0])], 2).await;
+    }
+
+    #[tokio::test]
+    async fn a_duplicate_embedding_index_is_rejected() {
+        assert_rejected(&[(0, [1.0, 0.0]), (0, [0.0, 1.0])], 2).await;
+    }
+
+    #[tokio::test]
+    async fn an_out_of_range_embedding_index_is_rejected() {
+        assert_rejected(&[(0, [1.0, 0.0]), (2, [0.0, 1.0])], 2).await;
+    }
+
+    #[tokio::test]
+    async fn an_extra_embedding_is_rejected() {
+        assert_rejected(&[(0, [1.0, 0.0]), (1, [0.0, 1.0])], 1).await;
+    }
+
+    #[tokio::test]
+    async fn out_of_order_embeddings_are_put_back_in_input_order() {
+        let base = embedding_service_with(&[(1, [0.0, 1.0]), (0, [1.0, 0.0])]).await;
+        let vectors = embedder_at(base).embed(&texts(2)).await.unwrap();
+        assert_eq!(vectors, vec![vec![1.0, 0.0], vec![0.0, 1.0]]);
+    }
+
+    #[tokio::test]
+    async fn no_input_means_no_request_and_no_vectors() {
+        // Nothing listens here: any request would fail with `unavailable`.
+        let embedder = embedder_at("http://127.0.0.1:1/v1".into());
+        assert!(embedder.embed(&[]).await.unwrap().is_empty());
+    }
+
     #[test]
     fn a_tool_call_without_an_answer_is_a_tool_request() {
         for raw in [
