@@ -272,7 +272,7 @@ impl OpenAiEmbedding {
             }
             if item.index != expected {
                 return Err(DomainError::unavailable(format!(
-                    "bad embedding response: duplicate index {}",
+                    "bad embedding response: unexpected index {}, expected {expected}",
                     item.index
                 )));
             }
@@ -421,30 +421,56 @@ mod tests {
 
     /// The service answers `items` to a request for `inputs` texts; that
     /// must not come back as vectors.
-    async fn assert_rejected(items: &[(usize, [f32; 2])], inputs: usize) {
+    async fn assert_rejected(items: &[(usize, [f32; 2])], inputs: usize, message: &str) {
         let embedder = embedder_at(embedding_service_with(items).await);
         let err = embedder.embed(&texts(inputs)).await.unwrap_err();
         assert_eq!(err.kind, ErrorKind::Unavailable, "{err:?}");
+        assert!(err.to_string().contains(message), "{message}: {err}");
     }
 
     #[tokio::test]
     async fn a_missing_embedding_is_rejected() {
-        assert_rejected(&[(0, [1.0, 0.0])], 2).await;
+        assert_rejected(&[(0, [1.0, 0.0])], 2, "expected 2 embeddings, got 1").await;
     }
 
     #[tokio::test]
     async fn a_duplicate_embedding_index_is_rejected() {
-        assert_rejected(&[(0, [1.0, 0.0]), (0, [0.0, 1.0])], 2).await;
+        assert_rejected(
+            &[(0, [1.0, 0.0]), (0, [0.0, 1.0])],
+            2,
+            "unexpected index 0, expected 1",
+        )
+        .await;
     }
 
     #[tokio::test]
     async fn an_out_of_range_embedding_index_is_rejected() {
-        assert_rejected(&[(0, [1.0, 0.0]), (2, [0.0, 1.0])], 2).await;
+        assert_rejected(
+            &[(0, [1.0, 0.0]), (2, [0.0, 1.0])],
+            2,
+            "index 2 out of range for 2 inputs",
+        )
+        .await;
+    }
+
+    #[tokio::test]
+    async fn a_gap_in_the_embedding_indices_is_reported_as_unexpected() {
+        assert_rejected(
+            &[(1, [1.0, 0.0]), (2, [0.0, 1.0])],
+            2,
+            "unexpected index 1, expected 0",
+        )
+        .await;
     }
 
     #[tokio::test]
     async fn an_extra_embedding_is_rejected() {
-        assert_rejected(&[(0, [1.0, 0.0]), (1, [0.0, 1.0])], 1).await;
+        assert_rejected(
+            &[(0, [1.0, 0.0]), (1, [0.0, 1.0])],
+            1,
+            "expected 1 embeddings, got 2",
+        )
+        .await;
     }
 
     #[tokio::test]
