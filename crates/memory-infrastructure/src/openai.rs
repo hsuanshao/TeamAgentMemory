@@ -249,7 +249,34 @@ impl OpenAiEmbedding {
             .json()
             .await
             .map_err(|e| DomainError::unavailable(format!("bad embedding response: {e}")))?;
+        // Every input gets exactly one vector, matched by `index`. A gateway
+        // that drops, repeats or invents an item must not shift vectors onto
+        // the wrong texts. Same class as an unparseable body: the caller
+        // falls back to BM25 and retries later. Neither the inputs nor the
+        // vectors go into the message.
+        if parsed.data.len() != batch.len() {
+            return Err(DomainError::unavailable(format!(
+                "bad embedding response: expected {} embeddings, got {}",
+                batch.len(),
+                parsed.data.len()
+            )));
+        }
         parsed.data.sort_by_key(|d| d.index);
+        for (expected, item) in parsed.data.iter().enumerate() {
+            if item.index >= batch.len() {
+                return Err(DomainError::unavailable(format!(
+                    "bad embedding response: index {} out of range for {} inputs",
+                    item.index,
+                    batch.len()
+                )));
+            }
+            if item.index != expected {
+                return Err(DomainError::unavailable(format!(
+                    "bad embedding response: duplicate index {}",
+                    item.index
+                )));
+            }
+        }
         Ok(parsed
             .data
             .into_iter()
